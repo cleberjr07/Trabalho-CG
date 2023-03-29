@@ -8,10 +8,19 @@ html,body{
 body{
   background-color:#404040;
 }
-      
-canvas{
-  border:1px solid black;
+.canvas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 5px;
 }
+
+.canvas-grid canvas {
+  width: 30vw;
+  height: 30vh;
+  margin: 1vw;;
+}
+
       
 div{
   display:flex; 
