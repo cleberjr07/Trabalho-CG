@@ -1,0 +1,50 @@
+html,body{margin:0px; padding:0px; width:100%; height:100%;}
+      
+body{background-color:#404040;}
+      
+canvas{border:1px solid black;}
+      
+div{display:flex; width:100%; height:100%; align-items:center; justify-content:center;}
+  header {
+    background-color: hsl(103, 98%, 18%);
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+  
+  nav li {
+    margin: 0;
+  }
+  
+  nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+  }
+  
+  .botao-compra {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .botao-compra:hover {
+    background-color: #555;
+  }
+  
+  footer {
+    background-color: #ccc;
+    padding: 10px;
+    text-align: center;
+  }
+  
