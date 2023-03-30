@@ -16,10 +16,6 @@ class ShaderBuilder{
         }
     }
 
-    //---------------------------------------------------
-    // Methods For Shader Prep.
-    //---------------------------------------------------
-    //Takes in unlimited arguments. Its grouped by two so for example (UniformName,UniformType): "uColors","3fv"
     prepareUniforms(){
         if(arguments.length % 2 != 0 ){ console.log("prepareUniforms needs arguments to be in pairs."); return this; }
 
@@ -46,10 +42,6 @@ class ShaderBuilder{
         return this;
     }
 
-    //---------------------------------------------------
-    // Setters Getters
-    //---------------------------------------------------
-    //Uses a 2 item group argument array. Uniform_Name, Uniform_Value;
     setUniforms(){
         if(arguments.length % 2 != 0){ console.log("setUniforms needs arguments to be in pairs."); return this; }
 
@@ -70,9 +62,6 @@ class ShaderBuilder{
         return this;
     }
 
-    //---------------------------------------------------
-    // Methods
-    //---------------------------------------------------
     activate(){ this.gl.useProgram(this.program); return this; }
     deactivate(){ this.gl.useProgram(null); return this; }
 
@@ -89,7 +78,6 @@ class ShaderBuilder{
         //If passing in arguments, then lets push that to setUniforms for handling. Make less line needed in the main program by having preRender handle Uniforms
         if(arguments.length > 0) this.setUniforms.apply(this,arguments);
 
-        //..........................................
         //Prepare textures that might be loaded up.
         //TODO, After done rendering need to deactivate the texture slots
         if(this.mTextureList.length > 0){
@@ -142,8 +130,6 @@ class Shader{
         //Note :: Extended shaders should deactivate shader when done calling super and setting up custom parts in the constructor.
     }
 
-    //...................................................
-    //Methods
     activate(){ this.gl.useProgram(this.program); return this; }
     deactivate(){ this.gl.useProgram(null); return this; }
 
@@ -158,11 +144,8 @@ class Shader{
         this.gl.deleteProgram(this.program);
     }
 
-    //...................................................
-    //RENDER RELATED METHODS
 
-    //Setup custom properties
-    preRender(){} //abstract method, extended object may need need to do some things before rendering.
+    preRender(){}
 
     //Handle rendering a modal
     renderModal(modal){
@@ -186,11 +169,6 @@ class Shader{
 
 
 class ShaderUtil{
-    //-------------------------------------------------
-    // Main utility functions
-    //-------------------------------------------------
-
-    //get the text of a script tag that are storing shader code.
     static domShaderSrc(elmID){
         var elm = document.getElementById(elmID);
         if(!elm || elm.text == ""){ console.log(elmID + " shader not found or no text."); return null; }
@@ -252,11 +230,6 @@ class ShaderUtil{
         return prog;
     }
 
-    //-------------------------------------------------
-    // Helper functions
-    //-------------------------------------------------
-
-    //Pass in Script Tag IDs for our two shaders and create a program from it.
     static domShaderProgram(gl,vectID,fragID,doValidate){
         var vShaderTxt	= ShaderUtil.domShaderSrc(vectID);								if(!vShaderTxt)	return null;
         var fShaderTxt	= ShaderUtil.domShaderSrc(fragID);								if(!fShaderTxt)	return null;
@@ -273,11 +246,6 @@ class ShaderUtil{
         return ShaderUtil.createProgram(gl,vShader,fShader,true);
     }
 
-    //-------------------------------------------------
-    // Setters / Getters
-    //-------------------------------------------------
-
-    //Get the locations of standard Attributes that we will mostly be using. Location will = -1 if attribute is not found.
     static getStandardAttribLocations(gl,program){
         return {
             position:	gl.getAttribLocation(program,ATTR_POSITION_NAME),

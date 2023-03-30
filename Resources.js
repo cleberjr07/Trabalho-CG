@@ -12,7 +12,6 @@
         if(Resources.Queue.length > 0) Resources.loadNextItem();
     }
 
-    //===================================================
     // Loading
     static loadTexture(name,src){
         for(var i=0; i < arguments.length; i+=2){
@@ -27,7 +26,6 @@
         return this;
     }
 
-    //===================================================
     // Manage Queue
     static loadNextItem(){
         //.......................................
@@ -69,7 +67,6 @@
         }
     }
 
-    //===================================================
     // Event Handlers
     static onDownloadSuccess(){
         //Its an image, lets load it up as a texture in gl.

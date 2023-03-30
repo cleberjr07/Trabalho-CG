@@ -4,7 +4,6 @@ class MathUtil{
 }
 
 
-//###########################################################################################
 class Vector3{
     constructor(x,y,z){	this.x = x || 0.0;	this.y = y || 0.0;	this.z = z || 0.0; }
 
@@ -32,11 +31,9 @@ class Vector3{
 }
 
 
-//###########################################################################################
 class Matrix4{
     constructor(){ this.raw = Matrix4.identity(); }
 
-    //....................................................................
     //Transformations Methods
     vtranslate(v){		Matrix4.translate(this.raw,v.x,v.y,v.z); return this; }
     translate(x,y,z){	Matrix4.translate(this.raw,x,y,z); return this;}
@@ -50,13 +47,12 @@ class Matrix4{
 
     invert(){			Matrix4.invert(this.raw); return this; }
 
-    //....................................................................
     //Methods
     //Bring is back to identity without changing the transform values.
     resetRotation(){	
         for(var i=0; i < this.raw.length; i++){
             if(i >= 12 && i <= 14) continue;
-            this.raw[i] = (i % 5 == 0)? 1 : 0;  //only positions 0,5,10,15 need to be 1 else 0.
+            this.raw[i] = (i % 5 == 0)? 1 : 0;
         }
 
         return this;
@@ -64,11 +60,10 @@ class Matrix4{
 
     //reset data back to identity.
     reset(){ 
-        for(var i=0; i < this.raw.length; i++) this.raw[i] = (i % 5 == 0)? 1 : 0; //only positions 0,5,10,15 need to be 1 else 0.
+        for(var i=0; i < this.raw.length; i++) this.raw[i] = (i % 5 == 0)? 1 : 0;
         return this;
     }
 
-    //....................................................................
     //Static Data Methods
     static identity(){
         var a = new Float32Array(16);
@@ -121,8 +116,6 @@ class Matrix4{
         out[15] = 1;
     };
 
-
-    //https://github.com/toji/gl-matrix/blob/master/src/gl-matrix/mat4.js
     //make the rows into the columns
     static transpose(out, a){
         //If we are transposing ourselves we can skip a few steps but have to cache some values
@@ -203,10 +196,8 @@ class Matrix4{
         return out;
     }
 
-    //....................................................................
     //Static Operation
 
-    //https://github.com/gregtatum/mdn-model-view-projection/blob/master/shared/matrices.js
     static multiplyVector(mat4, v) {
         var x = v[0], y = v[1], z = v[2], w = v[3];
         var c1r1 = mat4[ 0], c2r1 = mat4[ 1], c3r1 = mat4[ 2], c4r1 = mat4[ 3],
@@ -222,7 +213,6 @@ class Matrix4{
         ];
     }
 
-    //https://github.com/toji/gl-matrix/blob/master/src/gl-matrix/vec4.js, vec4.transformMat4
     static transformVec4(out, v, m){
         out[0] = m[0] * v[0] + m[4] * v[1] + m[8]	* v[2] + m[12] * v[3];
         out[1] = m[1] * v[0] + m[5] * v[1] + m[9]	* v[2] + m[13] * v[3];
@@ -267,7 +257,6 @@ class Matrix4{
     }
 
 
-    //....................................................................
     //Static Transformation
     static scale(out,x,y,z){
         out[0] *= x;
@@ -450,7 +439,6 @@ class Matrix4{
         return true;
     }
 
-    //https://github.com/toji/gl-matrix/blob/master/src/gl-matrix/mat4.js  mat4.scalar.translate = function (out, a, v) {
     static translate(out,x,y,z){
         out[12] = out[0] * x + out[4] * y + out[8]	* z + out[12];
         out[13] = out[1] * x + out[5] * y + out[9]	* z + out[13];

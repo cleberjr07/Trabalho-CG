@@ -13,8 +13,6 @@ class Transform{
         this.right		= new Float32Array(4);	//what the right direction is, invert to get left
     }
 
-    //--------------------------------------------------------------------------
-    //Methods
     updateMatrix(){
         this.matView.reset() //Order is very important!!
             .vtranslate(this.position)

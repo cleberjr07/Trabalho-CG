@@ -12,12 +12,12 @@
       gRLoop = new RenderLoop(onRender,30);
 
       //....................................
-      //carregando resources
+      //Carregando resources
       Resources.setup(gl,onReady).loadTexture("atlas","atlas_mindcraft.png").start();
     });
 
     function onReady(){
-      //Setup Test Shader, Modal, Meshes
+      //Configura Test Shader, Modal, Meshes
       gShader = new ShaderBuilder(gl,"vertex_shader","fragment_shader")
         .prepareUniforms("uPMatrix","mat4"
                 ,"uMVMatrix","mat4"

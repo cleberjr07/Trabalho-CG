@@ -84,7 +84,7 @@ var Primatives = {};
  		]
 
  		var mesh = gl.fCreateMeshVAO(name,aIndex,aVert,aNorm,aUV,4);
- 		mesh.noCulling = true;	//TODO Only setting this true to view animations better.
+ 		mesh.noCulling = true;
 
  		if(keepRawData){ //Have the option to save the data to use for normal debugging or modifying.
  			mesh.aIndex	= aIndex;
@@ -113,8 +113,8 @@ var Primatives = {};
  Primatives.MultiQuad = class {
  	static createModal(gl){ return new Modal(Primatives.MultiQuad.createMesh(gl)); }
  	static createMesh(gl){
- 		var	aIndex = [ ], //0,1,2, 2,3,0
- 			aUV = [ ], //0,0, 0,1, 1,1, 1,0 
+ 		var	aIndex = [ ],
+ 			aUV = [ ], 
  			aVert = [];		
 
  		for(var i=0; i < 10; i++){
@@ -158,29 +158,29 @@ var Primatives = {};
 
  		var p;	//Temp variable for position value.
  		for(var i=0; i <= div; i++){
- 			//Vertical line
+ 			//Vertical
  			p = -half + (i * step);
  			verts.push(p);		//x1
- 			verts.push(0);		//y1 verts.push(half);
- 			verts.push(half);	//z1 verts.push(0);
+ 			verts.push(0);		//y1
+ 			verts.push(half);	//z1
  			verts.push(0);		//c2
 
  			verts.push(p);		//x2
- 			verts.push(0);		//y2 verts.push(-half);
- 			verts.push(-half);	//z2 verts.push(0);	
- 			verts.push(0);		//c2 verts.push(1);
+ 			verts.push(0);		//y2
+ 			verts.push(-half);	//z2
+ 			verts.push(0);		//c2
 
- 			//Horizontal line
+ 			//Horizontal
  			p = half - (i * step);
  			verts.push(-half);	//x1
- 			verts.push(0);		//y1 verts.push(p);
- 			verts.push(p);		//z1 verts.push(0);
+ 			verts.push(0);		//y1
+ 			verts.push(p);		//z1
  			verts.push(0);		//c1
 
  			verts.push(half);	//x2
- 			verts.push(0);		//y2 verts.push(p);
- 			verts.push(p);		//z2 verts.push(0);
- 			verts.push(0);		//c2 verts.push(1);
+ 			verts.push(0);		//y2
+ 			verts.push(p);		//z2
+ 			verts.push(0);		//c2
  		}
 
  		if(incAxis){
