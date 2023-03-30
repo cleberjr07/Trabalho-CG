@@ -1,7 +1,5 @@
 class ShaderBuilder{
     constructor(gl,vertShader,fragShader){
-        //If the text is small, then its most likely DOM names (very hack) else its actual Source.
-        //TODO, Maybe check for new line instead of length, Dom names will never have new lines but source will.
         if(vertShader.length < 20)	this.program = ShaderUtil.domShaderProgram(gl,vertShader,fragShader,true);
         else						this.program = ShaderUtil.createProgramFromText(gl,vertShader,fragShader,true);
 
@@ -27,7 +25,6 @@ class ShaderBuilder{
         return this;
     }
 
-    //Takes in unlimited arguments. Its grouped by two so for example (UniformName,CacheTextureName): "uMask01","tex001";
     prepareTextures(){
         if(arguments.length % 2 != 0){ console.log("prepareTextures needs arguments to be in pairs."); return this; }
 
@@ -65,7 +62,6 @@ class ShaderBuilder{
     activate(){ this.gl.useProgram(this.program); return this; }
     deactivate(){ this.gl.useProgram(null); return this; }
 
-    //function helps clean up resources when shader is no longer needed.
     dispose(){
         //unbind the program if its currently active
         if(this.gl.getParameter(this.gl.CURRENT_PROGRAM) === this.program) this.gl.useProgram(null);
