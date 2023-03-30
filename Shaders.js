@@ -6,16 +6,16 @@ class ShaderBuilder{
         if(this.program != null){
             this.gl = gl;
             gl.useProgram(this.program);
-            this.mUniformList = [];		//List of Uniforms that have been loaded in. Key=UNIFORM_NAME {loc,type}
-            this.mTextureList = [];		//List of texture uniforms, Indexed {loc,tex}
+            this.mUniformList = [];
+            this.mTextureList = [];
 
-            this.noCulling = false;		//If true disables culling
-            this.doBlending = false;	//If true, allows alpha to work.
+            this.noCulling = false;
+            this.doBlending = false;
         }
     }
 
     prepareUniforms(){
-        if(arguments.length % 2 != 0 ){ console.log("prepareUniforms needs arguments to be in pairs."); return this; }
+        if(arguments.length % 2 != 0 ){ console.log("prepareUniforms precisa de argumentos."); return this; }
 
         var loc = 0;
         for(var i=0; i < arguments.length; i+=2){
@@ -26,12 +26,12 @@ class ShaderBuilder{
     }
 
     prepareTextures(){
-        if(arguments.length % 2 != 0){ console.log("prepareTextures needs arguments to be in pairs."); return this; }
+        if(arguments.length % 2 != 0){ console.log("prepareTextures precisa de argumentos."); return this; }
 
         var loc = 0,tex = "";
         for(var i=0; i < arguments.length; i+=2){
             tex = this.gl.mTextureCache[arguments[i+1]];
-            if(tex === undefined){ console.log("Texture not found in cache " + arguments[i+1]); continue; }
+            if(tex === undefined){ console.log("Textura não foi achada na cache" + arguments[i+1]); continue; }
 
             loc = gl.getUniformLocation(this.program,arguments[i]);
             if(loc != null) this.mTextureList.push({loc:loc,tex:tex});
@@ -40,19 +40,19 @@ class ShaderBuilder{
     }
 
     setUniforms(){
-        if(arguments.length % 2 != 0){ console.log("setUniforms needs arguments to be in pairs."); return this; }
+        if(arguments.length % 2 != 0){ console.log("setUniforms precisa de argumentos."); return this; }
 
         var name;
         for(var i=0; i < arguments.length; i+=2){
             name = arguments[i];
-            if(this.mUniformList[name] === undefined){ console.log("uniform not found " + name); return this; }
+            if(this.mUniformList[name] === undefined){ console.log("uniform não foi achado " + name); return this; }
 
             switch(this.mUniformList[name].type){
                 case "2fv":		this.gl.uniform2fv(this.mUniformList[name].loc, new Float32Array(arguments[i+1])); break;
                 case "3fv":		this.gl.uniform3fv(this.mUniformList[name].loc, new Float32Array(arguments[i+1])); break;
                 case "4fv":		this.gl.uniform4fv(this.mUniformList[name].loc, new Float32Array(arguments[i+1])); break;
                 case "mat4":	this.gl.uniformMatrix4fv(this.mUniformList[name].loc,false,arguments[i+1]); break;
-                default: console.log("unknown uniform type for " + name); break;
+                default: console.log("desconhecido uniform" + name); break;
             }
         }
 
@@ -63,19 +63,17 @@ class ShaderBuilder{
     deactivate(){ this.gl.useProgram(null); return this; }
 
     dispose(){
-        //unbind the program if its currently active
+        // desvincula o programa se estiver ativo no momento
         if(this.gl.getParameter(this.gl.CURRENT_PROGRAM) === this.program) this.gl.useProgram(null);
         this.gl.deleteProgram(this.program);
     }
 
     preRender(){
-        this.gl.useProgram(this.program); //Save a function call and just activate this shader program on preRender
+        this.gl.useProgram(this.program);
 
-        //If passing in arguments, then lets push that to setUniforms for handling. Make less line needed in the main program by having preRender handle Uniforms
         if(arguments.length > 0) this.setUniforms.apply(this,arguments);
 
-        //Prepare textures that might be loaded up.
-        //TODO, After done rendering need to deactivate the texture slots
+        //Prepara as texturas que podem ser carregadas.
         if(this.mTextureList.length > 0){
             var texSlot;
             for(var i=0; i < this.mTextureList.length; i++){
@@ -89,7 +87,7 @@ class ShaderBuilder{
         return this;
     }
 
-    //Handle rendering a modal
+    //Trata a renderização de um modal
     renderModel(model, doShaderClose){
         this.setUniforms("uMVMatrix",model.transform.getViewMatrix());
         this.gl.bindVertexArray(model.mesh.vao);
@@ -100,7 +98,7 @@ class ShaderBuilder{
         if(model.mesh.indexCount) this.gl.drawElements(model.mesh.drawMode, model.mesh.indexCount, gl.UNSIGNED_SHORT, 0); 
         else this.gl.drawArrays(model.mesh.drawMode, 0, model.mesh.vertexCount);
 
-        //Cleanup
+        //Limpa
         this.gl.bindVertexArray(null);
         if(model.mesh.noCulling || this.noCulling) this.gl.enable(this.gl.CULL_FACE);
         if(model.mesh.doBlending || this.doBlending) this.gl.disable(this.gl.BLEND);
@@ -123,7 +121,6 @@ class Shader{
             this.uniformLoc = ShaderUtil.getStandardUniformLocations(gl,this.program);
         }
 
-        //Note :: Extended shaders should deactivate shader when done calling super and setting up custom parts in the constructor.
     }
 
     activate(){ this.gl.useProgram(this.program); return this; }
@@ -133,9 +130,8 @@ class Shader{
     setModalMatrix(matData){	this.gl.uniformMatrix4fv(this.uniformLoc.modalMatrix, false, matData); return this; }
     setCameraMatrix(matData){	this.gl.uniformMatrix4fv(this.uniformLoc.cameraMatrix, false, matData); return this; }
 
-    //function helps clean up resources when shader is no longer needed.
     dispose(){
-        //unbind the program if its currently active
+        //Desvincula o programa se estiver ativo no momento
         if(this.gl.getParameter(this.gl.CURRENT_PROGRAM) === this.program) this.gl.useProgram(null);
         this.gl.deleteProgram(this.program);
     }
@@ -143,10 +139,10 @@ class Shader{
 
     preRender(){}
 
-    //Handle rendering a modal
+    //Trata a renderização de um modal
     renderModal(modal){
-        this.setModalMatrix(modal.transform.getViewMatrix());	//Set the transform, so the shader knows where the modal exists in 3d space
-        this.gl.bindVertexArray(modal.mesh.vao);				//Enable VAO, this will set all the predefined attributes for the shader
+        this.setModalMatrix(modal.transform.getViewMatrix());	//Define a transformação, para que o shader saiba onde o modal existe no espaço 3d
+        this.gl.bindVertexArray(modal.mesh.vao);
 
         if(modal.mesh.noCulling) this.gl.disable(this.gl.CULL_FACE);
         if(modal.mesh.doBlending) this.gl.enable(this.gl.BLEND);
@@ -154,7 +150,7 @@ class Shader{
         if(modal.mesh.indexCount) this.gl.drawElements(modal.mesh.drawMode, modal.mesh.indexCount, gl.UNSIGNED_SHORT, 0); 
         else this.gl.drawArrays(modal.mesh.drawMode, 0, modal.mesh.vertexCount);
 
-        //Cleanup
+        //Limpa
         this.gl.bindVertexArray(null);
         if(modal.mesh.noCulling) this.gl.enable(this.gl.CULL_FACE);
         if(modal.mesh.doBlending) this.gl.disable(this.gl.BLEND);
@@ -167,20 +163,19 @@ class Shader{
 class ShaderUtil{
     static domShaderSrc(elmID){
         var elm = document.getElementById(elmID);
-        if(!elm || elm.text == ""){ console.log(elmID + " shader not found or no text."); return null; }
+        if(!elm || elm.text == ""){ console.log(elmID + "não foi achado shader ou texto."); return null; }
 
         return elm.text;
     }
 
-    //Create a shader by passing in its code and what type
+    //Cria um shader passando o código e qual tipo
     static createShader(gl,src,type){
         var shader = gl.createShader(type);
         gl.shaderSource(shader,src);
         gl.compileShader(shader);
 
-        //Get Error data if shader failed compiling
         if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
-            console.error("Error compiling shader : " + src, gl.getShaderInfoLog(shader));
+            console.error("Erro ao compilar shader : " + src, gl.getShaderInfoLog(shader));
             gl.deleteShader(shader);
             return null;
         }
@@ -188,37 +183,33 @@ class ShaderUtil{
         return shader;
     }
 
-    //Link two compiled shaders to create a program for rendering.
+    //Vincula dois shaders compilados para criar um programa para renderização.
     static createProgram(gl,vShader,fShader,doValidate){
-        //Link shaders together
+        // Vincula os shaders juntos
         var prog = gl.createProgram();
         gl.attachShader(prog,vShader);
         gl.attachShader(prog,fShader);
-
-        //Force predefined locations for specific attributes. If the attibute isn't used in the shader its location will default to -1
         gl.bindAttribLocation(prog,ATTR_POSITION_LOC,ATTR_POSITION_NAME);
         gl.bindAttribLocation(prog,ATTR_NORMAL_LOC,ATTR_NORMAL_NAME);
         gl.bindAttribLocation(prog,ATTR_UV_LOC,ATTR_UV_NAME);
 
         gl.linkProgram(prog);
 
-        //Check if successful
+        //Verificando
         if(!gl.getProgramParameter(prog, gl.LINK_STATUS)){
-            console.error("Error creating shader program.",gl.getProgramInfoLog(prog));
+            console.error("Erro ao criar shader do programa.",gl.getProgramInfoLog(prog));
             gl.deleteProgram(prog); return null;
         }
 
-        //Only do this for additional debugging.
         if(doValidate){
             gl.validateProgram(prog);
             if(!gl.getProgramParameter(prog,gl.VALIDATE_STATUS)){
-                console.error("Error validating program", gl.getProgramInfoLog(prog));
+                console.error("Erro ao validar programa", gl.getProgramInfoLog(prog));
                 gl.deleteProgram(prog); return null;
             }
         }
 
-        //Can delete the shaders since the program has been made.
-        gl.detachShader(prog,vShader); //TODO, detaching might cause issues on some browsers, Might only need to delete.
+        gl.detachShader(prog,vShader);
         gl.detachShader(prog,fShader);
         gl.deleteShader(fShader);
         gl.deleteShader(vShader);
