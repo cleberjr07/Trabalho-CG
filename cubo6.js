@@ -1,4 +1,4 @@
-var gl, gRLoop,	gShader, gModel, gCamera, gCameraCtrl;
+    var gl, gRLoop,	gShader, gModel, gCamera, gCameraCtrl;
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){

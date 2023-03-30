@@ -10,15 +10,24 @@ body{
 }
 .canvas-grid {
   display: grid;
+  flex-wrap: wrap;
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 5px;
+  gap: 1px;
 }
 
 .canvas-grid canvas {
   width: 30vw;
   height: 30vh;
-  margin: 0.5vw;;
+  margin: 10px;
+}
+
+
+.canvas-description {
+  text-align: center;
+  margin: 0 10px 10px;
+  width: 100%;
 }
 
       
