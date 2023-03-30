@@ -74,26 +74,26 @@ class CameraController{
     constructor(gl,camera){
         var oThis = this;
         var box = gl.canvas.getBoundingClientRect();
-        this.canvas = gl.canvas;						//Need access to the canvas html element, main to access events
-        this.camera = camera;							//Reference to the camera to control
+        this.canvas = gl.canvas;
+        this.camera = camera;
 
         this.rotateRate = -300;
         this.panRate = 5;
         this.zoomRate = 200;
 
-        this.offsetX = box.left;						//Help calc global x,y mouse cords.
+        this.offsetX = box.left;
         this.offsetY = box.top;
 
-        this.initX = 0;									//Starting X,Y position on mouse down
+        this.initX = 0;
         this.initY = 0;
-        this.prevX = 0;									//Previous X,Y position on mouse move
+        this.prevX = 0;
         this.prevY = 0;
 
-        this.onUpHandler = function(e){ oThis.onMouseUp(e); };		//Cache func reference that gets bound and unbound a lot
+        this.onUpHandler = function(e){ oThis.onMouseUp(e); };
         this.onMoveHandler = function(e){ oThis.onMouseMove(e); }
 
-        this.canvas.addEventListener("mousedown",function(e){ oThis.onMouseDown(e); });		//Initializes the up and move events
-        this.canvas.addEventListener("mousewheel", function(e){ oThis.onMouseWheel(e); });	//Handles zoom/forward movement
+        this.canvas.addEventListener("mousedown",function(e){ oThis.onMouseDown(e); });
+        this.canvas.addEventListener("mousewheel", function(e){ oThis.onMouseWheel(e); });
     }
 
     getMouseVec2(e){ return {x:e.pageX - this.offsetX, y:e.pageY - this.offsetY}; }
