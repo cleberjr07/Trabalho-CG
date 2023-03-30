@@ -1,5 +1,5 @@
 class MathUtil{
-    //Normalize x value to x range, then normalize to lerp the z range.
+    //Normaliza o valor x para o intervalo x, depois normaliza para o intervalo z.
     static Map(x, xMin,xMax, zMin,zMax){ return (x - xMin) / (xMax - xMin) * (zMax-zMin) + zMin; }
 }
 
@@ -8,10 +8,10 @@ class Vector3{
     constructor(x,y,z){	this.x = x || 0.0;	this.y = y || 0.0;	this.z = z || 0.0; }
 
     magnitude(v){
-        //Only get the magnitude of this vector
+        //Obtém a magnitude deste vetor
         if(v === undefined) return Math.sqrt( this.x*this.x + this.y*this.y + this.z*this.z );
 
-        //Get magnitude based on another vector
+        //Obtém magnitude com base em outro vetor
         var x = v.x - this.x,
             y = v.y - this.y,
             z = v.y - this.z;
@@ -34,7 +34,7 @@ class Vector3{
 class Matrix4{
     constructor(){ this.raw = Matrix4.identity(); }
 
-    //Transformations Methods
+    //Transformations
     vtranslate(v){		Matrix4.translate(this.raw,v.x,v.y,v.z); return this; }
     translate(x,y,z){	Matrix4.translate(this.raw,x,y,z); return this;}
 
@@ -47,8 +47,7 @@ class Matrix4{
 
     invert(){			Matrix4.invert(this.raw); return this; }
 
-    //Methods
-    //Bring is back to identity without changing the transform values.
+    //Traz de volta à identidade sem alterar os valores de transformação.
     resetRotation(){	
         for(var i=0; i < this.raw.length; i++){
             if(i >= 12 && i <= 14) continue;
@@ -58,20 +57,18 @@ class Matrix4{
         return this;
     }
 
-    //reset data back to identity.
+    //redefine dados de volta à identidade.
     reset(){ 
         for(var i=0; i < this.raw.length; i++) this.raw[i] = (i % 5 == 0)? 1 : 0;
         return this;
     }
 
-    //Static Data Methods
     static identity(){
         var a = new Float32Array(16);
         a[0] = a[5] = a[10] = a[15] = 1;
         return a;
     }
 
-    //from glMatrix
     static perspective(out, fovy, aspect, near, far){
         var f = 1.0 / Math.tan(fovy / 2),
             nf = 1 / (near - far);
@@ -116,9 +113,8 @@ class Matrix4{
         out[15] = 1;
     };
 
-    //make the rows into the columns
+    //transforma as linhas em colunas
     static transpose(out, a){
-        //If we are transposing ourselves we can skip a few steps but have to cache some values
         if (out === a) {
             var a01 = a[1], a02 = a[2], a03 = a[3], a12 = a[6], a13 = a[7], a23 = a[11];
             out[1] = a[4];
@@ -155,7 +151,7 @@ class Matrix4{
         return out;
     }
 
-    //Calculates a 3x3 normal matrix (transpose inverse) from the 4x4 matrix
+    //Calcula uma matriz normal 3x3 (transposição inversa) a partir da matriz 4x4
     static normalMat3(out,a){
         var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
             a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
@@ -175,7 +171,7 @@ class Matrix4{
             b10 = a21 * a33 - a23 * a31,
             b11 = a22 * a33 - a23 * a32,
 
-        // Calculate the determinant
+        // Calcula o determinante
         det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
         if (!det) return null;
@@ -196,7 +192,6 @@ class Matrix4{
         return out;
     }
 
-    //Static Operation
 
     static multiplyVector(mat4, v) {
         var x = v[0], y = v[1], z = v[2], w = v[3];
@@ -221,15 +216,11 @@ class Matrix4{
         return out;
     }
 
-    //From glMatrix
-    //Multiple two mat4 together
     static mult(out, a, b){ 
         var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
             a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
             a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
             a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
-
-        // Cache only the current line of the second matrix
         var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
         out[0] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
         out[1] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
@@ -256,8 +247,6 @@ class Matrix4{
         return out;	
     }
 
-
-    //Static Transformation
     static scale(out,x,y,z){
         out[0] *= x;
         out[1] *= x;
@@ -286,7 +275,7 @@ class Matrix4{
             a22 = out[10],
             a23 = out[11];
 
-        // Perform axis-specific matrix multiplication
+        //Executa a multiplicação da matriz específica do axis
         out[0] = a00 * c - a20 * s;
         out[1] = a01 * c - a21 * s;
         out[2] = a02 * c - a22 * s;
@@ -310,7 +299,7 @@ class Matrix4{
             a22 = out[10],
             a23 = out[11];
 
-        // Perform axis-specific matrix multiplication
+        // Executa a multiplicação da matriz específica do axis
         out[4] = a10 * c + a20 * s;
         out[5] = a11 * c + a21 * s;
         out[6] = a12 * c + a22 * s;
@@ -334,7 +323,7 @@ class Matrix4{
             a12 = out[6],
             a13 = out[7];
 
-        // Perform axis-specific matrix multiplication
+        // Executa a multiplicação da matriz específica do axis
         out[0] = a00 * c + a10 * s;
         out[1] = a01 * c + a11 * s;
         out[2] = a02 * c + a12 * s;
@@ -372,12 +361,12 @@ class Matrix4{
         a10 = out[4]; a11 = out[5]; a12 = out[6]; a13 = out[7];
         a20 = out[8]; a21 = out[9]; a22 = out[10]; a23 = out[11];
 
-        // Construct the elements of the rotation matrix
+        // Constrói os elementos da matriz de rotação
         b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s;
         b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s;
         b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c;
 
-        // Perform rotation-specific matrix multiplication
+        // Realiza multiplicação de matriz específica de rotação
         out[0] = a00 * b00 + a10 * b01 + a20 * b02;
         out[1] = a01 * b00 + a11 * b01 + a21 * b02;
         out[2] = a02 * b00 + a12 * b01 + a22 * b02;
@@ -393,7 +382,7 @@ class Matrix4{
     }
 
     static invert(out,mat) {
-        if(mat === undefined) mat = out; //If input isn't sent, then output is also input
+        if(mat === undefined) mat = out;
 
         var a00 = mat[0], a01 = mat[1], a02 = mat[2], a03 = mat[3],
             a10 = mat[4], a11 = mat[5], a12 = mat[6], a13 = mat[7],
@@ -413,7 +402,7 @@ class Matrix4{
             b10 = a21 * a33 - a23 * a31,
             b11 = a22 * a33 - a23 * a32,
 
-            // Calculate the determinant
+            // Calcula o determinante
             det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
         if (!det) return false;
