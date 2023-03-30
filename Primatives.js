@@ -30,9 +30,9 @@ var Primatives = {};
  		var w = width*0.5, h = height*0.5, d = depth*0.5;
  		var x0 = x-w, x1 = x+w, y0 = y-h, y1 = y+h, z0 = z-d, z1 = z+d;
 
- 		//Starting bottom left corner, then working counter clockwise to create the front face.
- 		//Backface is the first face but in reverse (3,2,1,0)
- 		//keep each quad face built the same way to make index and uv easier to assign
+ 		//Começando no canto inferior esquerdo, depois trabalhando no sentido anti-horário para criar a face frontal.
+ 		//Backface é a primeira face, mas ao contrário (3,2,1,0)
+		//mantém cada face construído da mesma maneira para facilitar a atribuição de index e uv
  		var aVert = [
  			x0, y1, z1, 0,	//0 Front
  			x0, y0, z1, 0,	//1
@@ -65,15 +65,15 @@ var Primatives = {};
  			x1, y1, z0, 5	//4
  		];
 
- 		//Build the index of each quad [0,1,2, 2,3,0]
+ 		//Construir o índice [0,1,2, 2,3,0]
  		var aIndex = [];
  		for(var i=0; i < aVert.length / 4; i+=2) aIndex.push(i, i+1, (Math.floor(i/4)*4)+((i+2)%4));
 
- 		//Build UV data for each vertex
+ 		//Constroi dados UV para cada vértice
  		var aUV = [];
  		for(var i=0; i < 6; i++) aUV.push(0,0,	0,1,  1,1,  1,0);
 
- 		//Build Normal data for each vertex
+ 		//Constroi dados normais para cada vértice
  		var aNorm = [
  			 0, 0, 1,	 0, 0, 1,	 0, 0, 1,	 0, 0, 1,		//Front
  			 0, 0,-1,	 0, 0,-1,	 0, 0,-1,	 0, 0,-1,		//Back
@@ -86,7 +86,7 @@ var Primatives = {};
  		var mesh = gl.fCreateMeshVAO(name,aIndex,aVert,aNorm,aUV,4);
  		mesh.noCulling = true;
 
- 		if(keepRawData){ //Have the option to save the data to use for normal debugging or modifying.
+ 		if(keepRawData){
  			mesh.aIndex	= aIndex;
  			mesh.aVert	= aVert;
  			mesh.aNorm	= aNorm;
@@ -118,18 +118,18 @@ var Primatives = {};
  			aVert = [];		
 
  		for(var i=0; i < 10; i++){
- 			//Calculate a random size, y rotation and position for the quad
- 			var size = 0.2 + (0.8* Math.random()),		//Random Quad Size in the range of 0.2 - 1.0
- 				half = size * 0.5,						//Half of size, this is the radius for rotation
- 				angle = Math.PI * 2 * Math.random(),	//Random angle between 0 - 360 degrees in radians
- 				dx = half * Math.cos(angle),			//Calc the x distance, used as an offset for the random position
- 				dy = half * Math.sin(angle),			//Calc the y distance, for same offset but used in z 
- 				x = -2.5 + (Math.random()*5),			//Random position between -2.5 - 2.5
+ 			//Calcula um tamanho aleatório, rotação y e posição
+ 			var size = 0.2 + (0.8* Math.random()),
+ 				half = size * 0.5,
+ 				angle = Math.PI * 2 * Math.random(),
+ 				dx = half * Math.cos(angle),
+ 				dy = half * Math.sin(angle),
+ 				x = -2.5 + (Math.random()*5),
  				y = -2.5 + (Math.random()*5),			
  				z = 2.5 - (Math.random()*5),
- 				p = i * 4;								//Index of the first vertex of a quad
+ 				p = i * 4;
 
- 			//Build the 4 points of the quad
+ 			//Constroi os 4 pontos
  			aVert.push(x-dx, y+half, z-dy);		//TOP LEFT
  			aVert.push(x-dx, y-half, z-dy);		//BOTTOM LEFT
  			aVert.push(x+dx, y-half, z+dy);		//BOTTOM RIGHT			
@@ -149,14 +149,14 @@ var Primatives = {};
  Primatives.GridAxis = class {
  	static createModal(gl,incAxis){ return new Modal(Primatives.GridAxis.createMesh(gl,incAxis)); }
  	static createMesh(gl,incAxis){
- 		//Dynamiclly create a grid
+ 		//Cria grid
  		var verts = [],
- 			size = 2,			// W/H of the outer box of the grid, from origin we can only go 1 unit in each direction, so from left to right is 2 units max
- 			div = 10.0,			// How to divide up the grid
- 			step = size / div,	// Steps between each line, just a number we increment by for each line in the grid.
- 			half = size / 2;	// From origin the starting position is half the size.
+ 			size = 2,
+ 			div = 10.0,
+ 			step = size / div,
+ 			half = size / 2;
 
- 		var p;	//Temp variable for position value.
+ 		var p;
  		for(var i=0; i <= div; i++){
  			//Vertical
  			p = -half + (i * step);
@@ -219,17 +219,15 @@ var Primatives = {};
  		}
 
 
- 		//Setup
+ 		//Configura
  		var attrColorLoc = 4,
  			strideLen,
  			mesh = { drawMode:gl.LINES, vao:gl.createVertexArray() };
-
- 		//Do some math
  		mesh.vertexComponentLen = 4;
  		mesh.vertexCount = verts.length / mesh.vertexComponentLen;
- 		strideLen = Float32Array.BYTES_PER_ELEMENT * mesh.vertexComponentLen; //Stride Length is the Vertex Size for the buffer in Bytes
+ 		strideLen = Float32Array.BYTES_PER_ELEMENT * mesh.vertexComponentLen;
 
- 		//Setup our Buffer
+ 		//Configura o Buffer
  		mesh.bufVertices = gl.createBuffer();
  		gl.bindVertexArray(mesh.vao);
  		gl.bindBuffer(gl.ARRAY_BUFFER, mesh.bufVertices);
@@ -238,24 +236,24 @@ var Primatives = {};
  		gl.enableVertexAttribArray(attrColorLoc);
 
  		gl.vertexAttribPointer(
- 			ATTR_POSITION_LOC						//Attribute Location
- 			,3										//How big is the vector by number count
- 			,gl.FLOAT 								//What type of number we passing in
- 			,false									//Does it need to be normalized?
- 			,strideLen								//How big is a vertex chunk of data.
- 			,0										//Offset by how much
+ 			ATTR_POSITION_LOC
+ 			,3
+ 			,gl.FLOAT
+ 			,false
+ 			,strideLen
+ 			,0
  		);
 
  		gl.vertexAttribPointer(
- 			attrColorLoc							//new shader has "in float a_color" as the second attrib
- 			,1										//This atttrib is just a single float
+ 			attrColorLoc
+ 			,1
  			,gl.FLOAT
  			,false
- 			,strideLen								//Each vertex chunk is 4 floats long
- 			,Float32Array.BYTES_PER_ELEMENT * 3		//skip first 3 floats in our vertex chunk, its like str.substr(3,1) in theory.
+ 			,strideLen
+ 			,Float32Array.BYTES_PER_ELEMENT * 3
  		);
 
- 		//Cleanup and Finalize
+ 		//Limpa e finaliza
  		gl.bindVertexArray(null);
  		gl.bindBuffer(gl.ARRAY_BUFFER,null);
  		gl.mMeshCache["grid"] = mesh;

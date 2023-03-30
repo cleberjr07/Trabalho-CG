@@ -1,30 +1,29 @@
 class Transform{
     constructor(){
-        //transform vectors
-        this.position	= new Vector3(0,0,0);	//Traditional X,Y,Z 3d position
-        this.scale		= new Vector3(1,1,1);	//How much to scale a mesh. Having a 1 means no scaling is done.
-        this.rotation	= new Vector3(0,0,0);	//Hold rotation values based on degrees, Object will translate it to radians
-        this.matView 	= new Matrix4();		//Cache the results when calling updateMatrix
-        this.matNormal	= new Float32Array(9);	//This is a Mat3, raw array to hold the values is enough for what its used for
+        //transform vector
+        this.position	= new Vector3(0,0,0);
+        this.scale		= new Vector3(1,1,1);
+        this.rotation	= new Vector3(0,0,0);
+        this.matView 	= new Matrix4();
+        this.matNormal	= new Float32Array(9);
 
-        //Direction Vectors, Need 4 elements for math operations with matrices
-        this.forward	= new Float32Array(4);	//When rotating, keep track of what the forward direction is
-        this.up			= new Float32Array(4);	//what the up direction is, invert to get bottom
-        this.right		= new Float32Array(4);	//what the right direction is, invert to get left
+        //Vector de direção
+        this.forward	= new Float32Array(4);
+        this.up			= new Float32Array(4);
+        this.right		= new Float32Array(4);
     }
 
     updateMatrix(){
-        this.matView.reset() //Order is very important!!
+        this.matView.reset()
             .vtranslate(this.position)
             .rotateX(this.rotation.x * Transform.deg2Rad)
             .rotateZ(this.rotation.z * Transform.deg2Rad)
             .rotateY(this.rotation.y * Transform.deg2Rad)
             .vscale(this.scale);
 
-        //Calcuate the Normal Matrix which doesn't need translate, then transpose and inverses the mat4 to mat3
         Matrix4.normalMat3(this.matNormal,this.matView.raw);
 
-        //Determine Direction after all the transformations.
+        //Determina a direção após todas as transformações.
         Matrix4.transformVec4(this.forward,	[0,0,1,0],this.matView.raw); //Z
         Matrix4.transformVec4(this.up,		[0,1,0,0],this.matView.raw); //Y
         Matrix4.transformVec4(this.right,	[1,0,0,0],this.matView.raw); //X
@@ -49,4 +48,4 @@ class Transform{
     }
 }
 
-Transform.deg2Rad = Math.PI/180; //Cache result, one less operation to do for each update.
+Transform.deg2Rad = Math.PI/180;
