@@ -2,7 +2,7 @@ var gl, gRLoop,	gShader, gModel, gCamera, gCameraCtrl;
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){
-      gl = GLInstance("glcanvas6").fFitScreen(0.95,0.9).fClear();
+      gl = GLInstance("glcanvas6").fFitScreen(0.33,0.33).fClear();
 
       gCamera = new Camera(gl);
       gCamera.transform.position.set(0,1,3);
