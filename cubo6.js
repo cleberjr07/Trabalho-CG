@@ -2,7 +2,7 @@
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){
-      gl = GLInstance("glcanvas6").fFitScreen(0.33,0.33).fClear();
+      gl = GLInstance("glcanvas6").fFitScreen(0.31,0.31).fClear();
 
       gCamera = new Camera(gl);
       gCamera.transform.position.set(0,1,3);
@@ -11,7 +11,6 @@
       gGridFloor = new GridFloor(gl);
       gRLoop = new RenderLoop(onRender,30);
 
-      //....................................
       //Carregando resources
       Resources.setup(gl,onReady).loadTexture("atlas","atlas_mindcraft.png").start();
     });
