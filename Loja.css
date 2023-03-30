@@ -24,14 +24,13 @@ body{
   margin: 10px;
 }
 
-
-.canvas-description {
-  text-align: flex;
-  margin: 0 10px 10px;
-  width: 100%;
+.canvas-cubos{
+  display: flex;
+  flex-direction: column;
+  color: #fff;
 }
 
-      
+   
 div{
   display:flex; 
   width:100%; 

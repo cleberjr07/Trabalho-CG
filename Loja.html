@@ -21,13 +21,13 @@
     <script src="cubo5.js"></script>
     <script src="cubo6.js"></script>
     
-  <title>Loja ao Cubo</title>
+  <title>Loja Cubo</title>
   </head>
   <body>
     <header>
       <div>
       <img src="pngwing.com.png" alt="Logo" width="50" height="50">
-      <h1>Loja ao Cubo</h1>
+      <h1>Loja Cubo</h1>
       </div>
       <div>
       <nav>
@@ -42,18 +42,30 @@
       </main>
     </header>
     <div class="canvas-grid">
+      <div class="canvas-cubos"> 
       <canvas id="glcanvas1"></canvas>
-      <!-- <p class="canvas-description">Cubo de Grama</p> -->
+      <p class="canvas-description">Cubo de Grama</p>
+      </div>
+      <div class="canvas-cubos">
       <canvas id="glcanvas2"></canvas>
-      <!-- <p class="canvas-description">Cubo de um Tronco de Árvore</p> -->
+      <p class="canvas-description">Cubo de um Tronco de Árvore</p>
+      </div>
+      <div class="canvas-cubos">
       <canvas id="glcanvas3"></canvas>
-      <!-- <p class="canvas-description">Cubo de um Bau</p> -->
+      <p class="canvas-description">Cubo de um Bau</p>
+      </div>
+      <div class="canvas-cubos">
       <canvas id="glcanvas4"></canvas>
-      <!-- <p class="canvas-description">Cubo de uma Abobora de Helloween</p> -->
+      <p class="canvas-description">Cubo de uma Abobora de Helloween</p>
+      </div>
+      <div class="canvas-cubos">
       <canvas id="glcanvas5"></canvas>
-      <!-- <p class="canvas-description">Cubo de uma TNT</p> -->
+      <p class="canvas-description">Cubo de uma TNT</p>
+      </div>
+      <div class="canvas-cubos">
       <canvas id="glcanvas6"></canvas>
-      <!-- <p class="canvas-description">Cubo de Minerio de Diamante</p> -->
+      <p class="canvas-description">Cubo de Minerio de Diamante</p>
+      </div>
     </div>
  	<script id="vertex_shader" type="x-shader/x-vertex">#version 300 es
  		in vec4 a_position;
@@ -86,7 +98,7 @@
  		void main(void){ outColor = texture(uAltas,vUV); }
  	</script>
     <footer>
-      <p>Loja ao Cubo- Autor Cleber Junior</p>
+      <p>Loja Cubo - Autor Cleber Junior</p>
     </footer>
   </body>
 </html>
