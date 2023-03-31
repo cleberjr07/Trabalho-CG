@@ -35,7 +35,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){
-     var gl = GLInstance("glcanvas2").fFitScreen(0.31,0.31).fClear();
+     gl = GLInstance("glcanvas2").fFitScreen(1,1).fClear();
 
       gCamera = new Camera(gl);
       gCamera.transform.position.set(0,1,3);
@@ -70,7 +70,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
       [4,1, 4,1, 4,1, 5,1, 4,1, 5,1],			//Tronco
     ];
     function onRender(dt){
-      this.gl.fClear();
+      gl.fClear();
 
       gCamera.updateViewMatrix();
       gGridFloor.render(gCamera);

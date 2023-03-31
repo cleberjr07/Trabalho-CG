@@ -35,7 +35,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){
-     var gl = GLInstance("glcanvas3").fFitScreen(0.31,0.31).fClear();
+     gl = GLInstance("glcanvas3").fFitScreen(1,1).fClear();
 
       gCamera = new Camera(gl);
       gCamera.transform.position.set(0,1,3);
@@ -70,7 +70,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
       [11,1, 10,1, 10,1, 9,1, 10,1, 9,1],	  //Bau
     ];
     function onRender(dt){
-      this.gl.fClear();
+      gl.fClear();
 
       gCamera.updateViewMatrix();
       gGridFloor.render(gCamera);

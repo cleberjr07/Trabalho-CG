@@ -35,7 +35,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){
-     var gl = GLInstance("glcanvas5").fFitScreen(0.31,0.31).fClear();
+     gl = GLInstance("glcanvas5").fFitScreen(1,1).fClear();
 
       gCamera = new Camera(gl);
       gCamera.transform.position.set(0,1,3);
@@ -69,7 +69,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
       [8,0, 8,0, 8,0, 10,0, 8,0, 9,0],		//TNT
     ];
     function onRender(dt){
-      this.gl.fClear();
+      gl.fClear();
 
       gCamera.updateViewMatrix();
       gGridFloor.render(gCamera);

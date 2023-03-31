@@ -35,7 +35,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){
-      gl = GLInstance("glcanvas6").fFitScreen(0.31,0.31).fClear();
+      gl = GLInstance("glcanvas6").fFitScreen(1,1).fClear();
 
       gCamera = new Camera(gl);
       gCamera.transform.position.set(0,1,3);

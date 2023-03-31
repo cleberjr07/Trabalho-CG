@@ -7,7 +7,6 @@ uniform mat4 uPMatrix;
 uniform mat4 uMVMatrix;
 uniform mat4 uCameraMatrix;
 uniform vec2[6] uFaces;
-
 out highp vec2 vUV;
 
 const float size = 1.0/16.0;
@@ -36,7 +35,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
     var gGridFloor, mDebugVerts, mDebugLine;
 
     window.addEventListener("load",function(){
-     gl = GLInstance("glcanvas1").fFitScreen(0.31,0.31).fClear();
+      gl = GLInstance("glcanvas7").fFitScreen(1,1).fClear();
 
       gCamera = new Camera(gl);
       gCamera.transform.position.set(0,1,3);
@@ -58,7 +57,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
 
 
       var cubemesh = Primatives.Cube.createMesh(gl,"Cube",1,1,1,0,0,0,false);
-      for(var i=0; i < 1; i++){
+      for(var i=0; i < 6; i++){
         var model = new Modal(cubemesh).setPosition( (i%3)*2 , 0.6 , Math.floor(i/3) * -2);
         gCubes.push(model);
       }
@@ -68,10 +67,16 @@ void main(void){ outColor = texture(uAltas,vUV); }
 
     var gCubes = [];
     var texMap = [
-      [3,0, 3,0, 3,0, 2,0, 3,0, 2,9],			//Grama
+        [3,0, 3,0, 3,0, 2,0, 3,0, 2,9],		//Grama
+        [4,1, 4,1, 4,1, 5,1, 4,1, 5,1],		//Tronco
+        [11,1, 10,1, 10,1, 9,1, 10,1, 9,1],	//Bau
+        [7,7, 6,7, 6,7, 6,7, 6,7, 6,6],		//Abobora
+        [8,0, 8,0, 8,0, 10,0, 8,0, 9,0],	//TNT
+        [2,3, 2,3, 2,3, 2,3, 2,3, 2,3]      //diamante
     ];
     function onRender(dt){
       gl.fClear();
+
       gCamera.updateViewMatrix();
       gGridFloor.render(gCamera);
       gShader.preRender("uCameraMatrix",gCamera.viewMatrix);
