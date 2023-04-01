@@ -28,11 +28,17 @@ body{
   display: flex;
   flex-direction: column;
   color: #fff;
+  align-items: center;
 }
 
 .canvas-cubos img {
   max-width: 100px;
   max-height: 100px;
+}
+
+.canvas-description {
+  color: white;
+  text-decoration: none;
 }
 
    
