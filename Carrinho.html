@@ -4,9 +4,30 @@
     <link rel="icon" href="minecraft-icon-16x16-22.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="Loja.css">
     <script src="Carrinho.js"></script>
+    <script src="Background.js"></script>
+    <script>
+    function initCart() {
+  // recupera o carrinho do localStorage
+  const cartData = localStorage.getItem('cart');
+  if (cartData) {
+    // converte os dados do carrinho em um objeto JavaScript
+    cart = JSON.parse(cartData);
+  }
+  // atualiza a exibição do carrinho
+  updateCart();
+  // adiciona eventos aos botões de remoção
+  addRemoveBtnEventListeners();
+  // atualiza o total da compra
+  updateTotal();
+}
+
+    </script>
   <title>Loja Cubo</title>
   </head>
   <body>
+    <div class="canvas-back">
+    <canvas id="canvas"></canvas>
+    </div>
     <header>    
       <div>
       <img src="pngwing.com.png" alt="Logo" width="50" height="50">

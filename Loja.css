@@ -4,9 +4,13 @@ html,body{
   width:100%; 
   height:100%;
 }
-      
-body{
-  background-color:#404040f4;
+
+.canvas-back {
+  position: absolute;
+			top: 100px;
+			left: 0;
+			z-index: -1;
+  background-color: #404040f4;
 }
 
 .canvas-grid {
