@@ -9,5 +9,5 @@
 (?)    -Pode clicar no menu e trocar a textura e cor.
 
 (x)    Todos os objetos que o usuário comprar tem uma visão única.
-(?)    Menu principal de navegação da página em WebGL.
+(x)    Menu principal de navegação da página em WebGL.
 (?)    Fundo da página é uma animação em WebGL.
