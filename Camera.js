@@ -1,6 +1,6 @@
 class Camera{
     constructor(gl,fov,near,far){
-        //Configura a matrix
+        //Configura a matriz
         this.projectionMatrix = new Float32Array(16);
         var ratio = gl.canvas.width / gl.canvas.height;
         Matrix4.perspective(this.projectionMatrix, fov || 45, ratio, near || 0.1, far || 100.0);

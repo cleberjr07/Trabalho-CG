@@ -10,7 +10,6 @@ html,body{
 			top: 100px;
 			left: 0;
 			z-index: -1;
-  background-color: #404040f4;
 }
 
 .canvas-grid {
@@ -43,6 +42,7 @@ html,body{
 .canvas-description {
   color: white;
   text-decoration: none;
+  background-color: black;
 }
 
 table {

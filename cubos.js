@@ -38,7 +38,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
       gl = GLInstance("glcanvas7").fFitScreen(1,1).fClear();
 
       gCamera = new Camera(gl);
-      gCamera.transform.position.set(0,1,3);
+      gCamera.transform.position.set(2,1,6);
       gCameraCtrl = new CameraController(gl,gCamera);
 
       gGridFloor = new GridFloor(gl);
