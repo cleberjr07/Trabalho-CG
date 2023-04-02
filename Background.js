@@ -1,7 +1,7 @@
 		if (window.layout)
             layout.overridePreference("WebGLEnabled", "1");
 
-        function initWebGL(canvasName, vshader, fshader, attribs, clearColor, clearDepth)
+        function initWebGL(canvasName, clearColor, clearDepth)
         {
             var canvas = document.getElementById(canvasName);
             var gl = canvas.getContext("webgl");
