@@ -4,29 +4,12 @@
     <link rel="icon" href="minecraft-icon-16x16-22.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="Loja.css">
     <script src="Carrinho.js"></script>
-    <script src="Background.js"></script>
     <script>
-    function initCart() {
-  // recupera o carrinho do localStorage
-  const cartData = localStorage.getItem('cart');
-  if (cartData) {
-    // converte os dados do carrinho em um objeto JavaScript
-    cart = JSON.parse(cartData);
-  }
-  // atualiza a exibição do carrinho
-  updateCart();
-  // adiciona eventos aos botões de remoção
-  addRemoveBtnEventListeners();
-  // atualiza o total da compra
-  updateTotal();
-}
-
+      displayCart ();
     </script>
-  <title>Loja Cubo</title>
+  <title>Loja Cubo - Carrinho de Compras</title>
   </head>
   <body>
-    <div class="canvas-back">
-    <canvas id="canvas"></canvas>
     </div>
     <header>    
       <div>
@@ -46,16 +29,25 @@
       </main>
     </header>
     <table>
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Preço</th>
-            <th>Quantidade</th>
-            <th>Remover</th>
-          </tr>
-        </thead>
-        <tbody id="cart-items"></tbody>
-      </table>
+      <thead>
+        <tr>
+          <th>Imagem</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Remover</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items">
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"></td>
+          <td id="totalPrice"></td>
+          <td><button id="clearButton">Esvaziar Carrinho</button></td>
+        </tr>
+      </tfoot>
+    </table>
+    
     <footer>
       <p>Loja Cubo - Autor Cleber Junior</p>
     </footer>

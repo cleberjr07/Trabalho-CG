@@ -32,7 +32,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
     var cameraRotation = 0;
     var cameraDistance = 6.0;
     var cameraRotationSpeed = -0.3;
-    var cameraY = 1.0;
+    var cameraY = 1;
     var cameraYDirection = 1;
     var cameraYSpeed = 0.1;
     var gl, gRLoop, gShader, gModel, gCamera, gCameraCtrl;
@@ -82,7 +82,7 @@ function onRender(dt){
   gl.fClear();
 
   cameraY += cameraYDirection * cameraYSpeed;
-      if(cameraY > 3.0 || cameraY < 0.5){
+      if(cameraY > 2.0 || cameraY < 0.5){
         cameraYDirection *= -1;
       }
   cameraRotation += cameraRotationSpeed;
