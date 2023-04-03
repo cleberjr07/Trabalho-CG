@@ -30,11 +30,11 @@ out vec4 outColor;
 void main(void){ outColor = texture(uAltas,vUV); }
 `;
     var cameraRotation = 0;
-    var cameraDistance = 6.0;
+    var cameraDistance = 68;
     var cameraRotationSpeed = -0.3;
     var cameraY = 1;
     var cameraYDirection = 1;
-    var cameraYSpeed = 0.1;
+    var cameraYSpeed = 0.07;
     var gl, gRLoop, gShader, gModel, gCamera, gCameraCtrl;
     var gGridFloor, mDebugVerts, mDebugLine;
 
@@ -43,7 +43,7 @@ void main(void){ outColor = texture(uAltas,vUV); }
 
   gCamera = new Camera(gl);
   gCamera.transform.position.set(0,1,cameraDistance);
-  gCamera.transform.rotation.set(0, cameraRotation, 0);
+  gCamera.transform.rotation.set(0, cameraRotation, 6);
   gCameraCtrl = new CameraController(gl,gCamera);
 
   gGridFloor = new GridFloor(gl);
@@ -87,7 +87,7 @@ function onRender(dt){
       }
   cameraRotation += cameraRotationSpeed;
 
-  gCamera.transform.position.set(0, cameraY, 3);
+  gCamera.transform.position.set(2, cameraY, 7);
   gCamera.transform.rotation.set(0, cameraRotation, 0);
   gCamera.updateViewMatrix();
 
